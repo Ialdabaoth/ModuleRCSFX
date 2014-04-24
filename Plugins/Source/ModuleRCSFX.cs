@@ -116,14 +116,13 @@ public class ModuleRCSFX : ModuleRCS
             if (vessel.ActionGroups[KSPActionGroup.RCS])
             {
                 Vector3 CoM = vessel.CoM + vessel.rb_velocity * Time.deltaTime;
-                Vector3 torque = Vector3.Cross(inputAngular, (part.transform.position - CoM).normalized);
 
                 float effectPower = 0f;
                 for (int i = 0; i < thrusterTransforms.Count; i++)
                 {
-
                     if (thrusterTransforms[i].position != Vector3.zero)
                     {
+                        Vector3 torque = Vector3.Cross(inputAngular, (thrusterTransforms[i].position - CoM).normalized);
                         Vector3 thruster;
                         if (useZaxis)
                             thruster = thrusterTransforms[i].forward;
