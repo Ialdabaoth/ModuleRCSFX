@@ -40,10 +40,11 @@ public class ModuleRCSFX : ModuleRCS
         if (part != null && part.partInfo != null)
             prefab = (ModuleRCSFX)part.partInfo.partPrefab.Modules["ModuleRCSFX"];
 
-        if (prefab != null && prefab.propellants != null)
-            _props = prefab.propellants;
-        else
+        if(node.GetNodes("PROPELLANT").Length > 0)
             LoadPropellants(node);
+        else if (prefab != null && prefab.propellants != null)
+            _props = prefab.propellants;
+            
     }
 
     public override void OnStart(StartState state)
@@ -84,7 +85,7 @@ public class ModuleRCSFX : ModuleRCS
 
     new public void FixedUpdate()
     {
-        if (HighLogic.LoadedSceneIsEditor)
+        if (!HighLogic.LoadedSceneIsFlight)
             return;
 
         if (TimeWarp.CurrentRate > 1.0f && TimeWarp.WarpMode == TimeWarp.Modes.HIGH)
